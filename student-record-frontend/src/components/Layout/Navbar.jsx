@@ -1,6 +1,6 @@
 /**
  * Navbar Component
- * Top navigation bar with app title and notifications
+ * Top navigation bar with app title, About button, and notifications
  * Fixed position at top of the page
  */
 
@@ -12,13 +12,18 @@ import {
     IconButton,
     Badge,
     Avatar,
+    Tooltip,
 } from '@mui/material';
 import {
     Notifications,
     Menu as MenuIcon,
+    Info as InfoIcon,
 } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = ({ toggleSidebar }) => {
+    const navigate = useNavigate();
+
     return (
         <AppBar
             position="fixed"
@@ -47,23 +52,48 @@ const Navbar = ({ toggleSidebar }) => {
                         display: 'flex',
                         alignItems: 'center',
                         gap: 1,
+                        cursor: 'pointer',
                     }}
+                    onClick={() => navigate('/')}
                 >
                     <span style={{ fontSize: '1.5rem' }}>🎓</span>
                     Student Record Management
                 </Typography>
 
+                {/* About Button */}
+                <Tooltip title="About Us">
+                    <IconButton
+                        color="inherit"
+                        onClick={() => navigate('/about')}
+                        sx={{ mr: 1 }}
+                    >
+                        <InfoIcon />
+                    </IconButton>
+                </Tooltip>
+
                 {/* Notification Bell */}
-                <IconButton color="inherit">
-                    <Badge badgeContent={4} color="error">
-                        <Notifications />
-                    </Badge>
-                </IconButton>
+                <Tooltip title="Notifications">
+                    <IconButton color="inherit">
+                        <Badge badgeContent={4} color="error">
+                            <Notifications />
+                        </Badge>
+                    </IconButton>
+                </Tooltip>
 
                 {/* User Avatar */}
-                <Avatar sx={{ ml: 2, bgcolor: 'secondary.main', width: 36, height: 36 }}>
-                    A
-                </Avatar>
+                <Tooltip title="Admin">
+                    <Avatar
+                        sx={{
+                            ml: 2,
+                            bgcolor: 'secondary.main',
+                            width: 36,
+                            height: 36,
+                            cursor: 'pointer',
+                        }}
+                    >
+                        A
+                    </Avatar>
+                </Tooltip>
             </Toolbar>
         </AppBar>
     );
